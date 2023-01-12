@@ -11,6 +11,8 @@ module.exports = {
       "utellyassets9-3.imgix.net",
       "utellyassets9-2.imgix.net",
       "utellyassets9-1.imgix.net",
+      "m.media-amazon.com/images",
+      "m.media-amazon.com",
     ],
   },
   env: {
