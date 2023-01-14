@@ -1,162 +1,143 @@
+"use strict";
 import Head from "next/head";
 import Image from "next/image";
-import { Inter } from "@next/font/google";
-
-// import the database from firebaseConfig folder
-import { db } from "../firebase/firebaseConfig";
-// import functions for Firestore
-import {
-  collection,
-  getDocs,
-  addDoc,
-  deleteDoc,
-  doc,
-} from "firebase/firestore";
 import { useState, useEffect } from "react";
+import { Dialog } from "@headlessui/react";
+import { motion, AnimatePresence } from "framer-motion";
+import SearchResults from "../components/SearchResults";
+import SelectedTitle from "../components/SelectedTitle";
+import { TfiSearch } from "react-icons/tfi";
 
-// Setup a reference to the books collection within db
-const colRef = collection(db, "books");
+export default function Movies() {
+  // State Variables
+  const [data, setData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [newString, setNewString] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectTitle, setSelectTitle] = useState({});
+  const [locations, setLocations] = useState([]);
 
-const inter = Inter({ subsets: ["latin"] });
-// console.log(books);
-export default function Home() {
-  const [bookData, setBookData] = useState([]);
-  const [bookTitle, setBookTitle] = useState("");
-  const [bookAuthor, setBookAuthor] = useState("");
-  const [bookPages, setBookPages] = useState(null);
+  // framerMotion Variables
 
-  const handleFormInput = (e) => {
-    const value = e.target.value;
+  let i = 0;
+  const imdbApiKey = process.env.IMDB_API_KEY;
+  const rapidApiKey = process.env.RAPID_API_KEY;
+
+  //Change state of search query from search input and switch ' ' for '_'
+  const handleInput = (e) => {
     const id = e.target.id;
-    if (id === "title") {
-      setBookTitle(value);
-      // console.log(value);
-    }
-    if (id === "author") {
-      setBookAuthor(value);
-      // console.log(value);
-    }
-    if (id === "pages") {
-      setBookPages(value);
-      // console.log(value);
+    const value = e.target.value;
+    if (id === "search") {
+      setSearchQuery(value.replaceAll(" ", "_"));
     }
   };
 
-  const handleAddBook = (e) => {
-    let newBook = {
-      title: bookTitle,
-      author: bookAuthor,
-      pageNum: bookPages,
-    };
-    // addDoc(colRef, newBook);
-    addDoc(colRef, {
-      title: bookTitle,
-      author: bookAuthor,
-      pageNum: bookPages,
-    });
-    getBookData();
-    document.getElementById("addBookForm").reset();
-    // e.reset();
+  console.log("This is the search query: ", searchQuery);
+  // UTelly API - Resquest Options - API Key and Host location
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": rapidApiKey,
+      "X-RapidAPI-Host":
+        "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com",
+    },
   };
 
-  const handleDeleteDoc = (id) => {
-    const targetDoc = doc(db, "books", id);
-    deleteDoc(targetDoc);
-    getBookData();
-    // getBookData();
+  // Close Modal Function - Clears selectTitle and location
+  const closeModal = () => {
+    setIsOpen(false);
+    setSelectTitle({});
+    setLocations([]);
   };
 
-  const getBookData = () => {
-    getDocs(colRef)
-      .then((snapshot) => {
-        let books = [];
-        snapshot.docs.forEach((doc) => {
-          books.push({ ...doc.data(), id: doc.id });
-        });
-        // console.log(books);
-        setBookData(books);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  // Get Selected Title Watch Locations - Param = selectedTitle.id
+  const getLocations = async (id) => {
+    const response = await fetch(
+      `https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/idlookup?source_id=${id}&source=imdb&country=uk`,
+      options
+    );
+    const data = await response.json();
+    const locations = await data.collection.locations;
+    setLocations(locations);
   };
 
-  useEffect(() => {
-    getBookData();
-  }, []);
-  // // use getDocs to get a snapshot of the current documents in collection
+  // UTELLY API - SEARCH BY ID
+
+  // IMDb API Search Query
+  const searchTitles = async () => {
+    setData([]);
+    const response = await fetch(
+      `https://imdb-api.com/en/API/SearchTitle/${imdbApiKey}/${searchQuery}`
+    );
+    const titles = await response.json();
+    console.log("Titles function data:", titles.results);
+    let resultsImages = [];
+    // let resultsLocations = [];
+    // Only responses with an image added to results
+    for (i = 0; i < titles.results.length; i++) {
+      if (titles.results[i].image != "") resultsImages.push(titles.results[i]);
+      // resultsLocations.push(titles.results[i].id);
+    }
+    // setLocations(resultsLocations);
+    setData(resultsImages);
+  };
+
+  // IMDb API SEARCH BY ID
+  const getTitle = async (id) => {
+    const response = await fetch(
+      `https://imdb-api.com/en/API/Title/${imdbApiKey}/${id}`
+    );
+    const title = await response.json();
+    console.log(title);
+    setSelectTitle(title);
+  };
 
   return (
     <>
-      <div className="w-5/6 mx-auto ">
-        <h2 className="font-semibold text-xl">Firebase Firestore</h2>
-        <div className="grid gap-5 md:grid-cols-2">
-          <div>
-            <ul className="">
-              {bookData.map((book, index) => {
-                return (
-                  <li
-                    className=" list-none border my-5 p-5 bg-white shadow-md rounded-md "
-                    key={index}
-                  >
-                    <p className="font-semibold">{book.title}</p>
-                    <p>Author: {book.author}</p>
-                    <p>Pages: {book.pageNum}</p>
-                    <button
-                      className=" bg-red-400 py-1 px-3 text-white font-medium rounded-md mt-2"
-                      onClick={() => handleDeleteDoc(book.id)}
-                    >
-                      Delete
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-          <div className="order-first md:order-none">
-            <form
-              id="addBookForm"
-              onSubmit={(event) => {
-                event.preventDefault();
-                handleAddBook(event);
-              }}
-              className="add flex flex-col"
-              action=""
-            >
-              <label htmlFor="title">Title:</label>
-              <input
-                className=" border rounded-md mb-2"
-                onChange={(e) => handleFormInput(e)}
-                id="title"
-                type="text"
-                name="title"
-                required
-              />
-              <label htmlFor="author">Author</label>
-              <input
-                onChange={(e) => handleFormInput(e)}
-                className=" border rounded-md mb-2"
-                id="author"
-                type="text"
-                name="author"
-                required
-              />
-              <label htmlFor="pages">Number of Pages</label>
-              <input
-                onChange={(e) => handleFormInput(e)}
-                className=" border rounded-md mb-2"
-                id="pages"
-                type="number"
-                name="pages"
-              />
-
-              <button className="bg-slate-500 rounded-md self-start px-5 py-3 mt-2 text-white">
-                Add book to list
-              </button>
-            </form>
-          </div>
+      <Head></Head>
+      <main className=" bg-darkgrey py-5 h-auto min-h-screen">
+        <div className="w-full px-2 mx-auto">
+          <h1 className=" font-poppins text-5xl font-light mb-5 text-offwhite">
+            Media Search
+          </h1>
+          <p className="mb-3 text-offwhite ">
+            Find where to watch TV shows or Movies across all streaming
+            platforms
+          </p>
+          <form
+            className="mb-5 flex items-center"
+            onSubmit={(e) => {
+              e.preventDefault();
+              searchTitles();
+            }}
+            action=""
+          >
+            <input
+              placeholder="Start typing..."
+              className="border p-2 pl-4 rounded-tl-full rounded-bl-full w-5/6"
+              type="text"
+              id="search"
+              onChange={(e) => handleInput(e)}
+            />
+            <button className=" w-1/6 bg-deepRed py-3 px-5  text-white text-xl rounded-tr-full rounded-br-full flex">
+              <TfiSearch className="" />
+            </button>
+          </form>
+          <SearchResults
+            getTitle={getTitle}
+            data={data}
+            setIsOpen={setIsOpen}
+            getLocations={getLocations}
+          />
         </div>
-      </div>
+        <SelectedTitle
+          closeModal={closeModal}
+          selectTitle={selectTitle}
+          isOpen={isOpen}
+          locations={locations}
+        />
+        {/* PopUp */}
+      </main>
     </>
   );
 }
