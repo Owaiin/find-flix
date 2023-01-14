@@ -41,7 +41,7 @@ export default function SearchResults({
               return (
                 <motion.div
                   variants={framerItem}
-                  className=" min-h-fit flex flex-col justify-between bg-white py-4 px-2 rounded-2xl shadow-2xl"
+                  className=" min-h-fit flex flex-col justify-between bg-deepRed rounded-2xl shadow-2xl"
                   key={index}
                   exit={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
@@ -55,16 +55,28 @@ export default function SearchResults({
                     width={300}
                     height={300}
                     quality={25}
-                    className=" rounded-2xl h-3/4 object-cover w-full"
+                    className=" rounded-2xl h-full object-cover w-full"
                     alt={`Poster for ${object.title}`}
+                    onClick={() => {
+                      getTitle(object.id);
+                      setIsOpen(true);
+                      getLocations(object.id);
+                    }}
                   />
                   <div>
-                    <p className=" font-poppins font-bold text-darkgrey mt-2 text-base">
+                    <p
+                      className=" font-poppins font-bold text-offwhite  text-base px-2 py-1 underline text-center"
+                      onClick={() => {
+                        getTitle(object.id);
+                        setIsOpen(true);
+                        getLocations(object.id);
+                      }}
+                    >
                       {object.title}
                     </p>
                     {/* <p className="mb-2 ">{object.description}</p> */}
 
-                    <button
+                    {/* <button
                       onClick={() => {
                         getTitle(object.id);
                         setIsOpen(true);
@@ -73,7 +85,7 @@ export default function SearchResults({
                       className=" bg-deepRed py-2 px-4 rounded-md mt-2 w-full font-medium text-white"
                     >
                       More info
-                    </button>
+                    </button> */}
                   </div>
                 </motion.div>
               );

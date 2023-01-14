@@ -7,6 +7,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import SearchResults from "../components/SearchResults";
 import SelectedTitle from "../components/SelectedTitle";
 import { TfiSearch } from "react-icons/tfi";
+import dynamic from "next/dynamic";
+
+const selectedTitleDy = dynamic(() => import("../components/SelectedTitle"));
+const searchResultsDy = dynamic(() => import("../components/SearchResults"));
 
 export default function Movies() {
   // State Variables
@@ -94,13 +98,12 @@ export default function Movies() {
 
   return (
     <>
-      <Head></Head>
       <main className=" bg-darkgrey py-5 h-auto min-h-screen">
         <div className="w-full px-2 mx-auto">
           <h1 className=" font-poppins text-5xl font-light mb-5 text-offwhite">
-            Media Search
+            FINDFLIX
           </h1>
-          <p className="mb-3 text-offwhite ">
+          <p className="mb-3 text-offwhite font-poppins ">
             Find where to watch TV shows or Movies across all streaming
             platforms
           </p>
@@ -135,6 +138,9 @@ export default function Movies() {
           selectTitle={selectTitle}
           isOpen={isOpen}
           locations={locations}
+          getTitle={getTitle}
+          setIsOpen={setIsOpen}
+          getLocations={getLocations}
         />
         {/* PopUp */}
       </main>

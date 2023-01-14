@@ -8,7 +8,16 @@ export default function SelectTitle({
   selectTitle,
   locations,
   closeModal,
+  getTitle,
+  setIsOpen,
+  getLocations,
 }) {
+  const goToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
   return (
     <>
       <Dialog
@@ -32,7 +41,7 @@ export default function SelectTitle({
           <Dialog.Panel className="w-full max-w-5xl rounded-3xl bg-black  h-full relative">
             <button
               onClick={() => closeModal()}
-              className=" rounded-full bg-deepRed text-white text-2xl p-1 absolute top-2 right-4 z-30"
+              className=" rounded-full bg-deepRed text-white text-2xl p-1 absolute top-4 right-4 z-30"
             >
               <TfiBackLeft />
             </button>
@@ -49,7 +58,7 @@ export default function SelectTitle({
               <div className=" bg-gradient-to-t from-darkgrey w-full h-full absolute top-0 left-0 rounded-3xl z-10"></div>
 
               <Dialog.Description className="relative w-full h-full z-20">
-                <div className="grid md:grid-cols-2 gap-5 absolute top-1/2 bg-gradient-to-t from-darkgrey px-2">
+                <div className="grid md:grid-cols-2 gap-5 absolute top-1/2 px-2">
                   <div className="">
                     <Dialog.Title className="md:text-5xl font-poppins text-3xl font-bold text-offwhite relative mb-1 z-20">
                       {selectTitle.title}
@@ -113,12 +122,46 @@ export default function SelectTitle({
                       Log selectTitle
                     </button> */}
 
+                    {/* SIMILAR TITLES */}
+                    <ul className="grid grid-cols-2 gap-5">
+                      {!selectTitle.similars
+                        ? ""
+                        : selectTitle.similars.map((similar, index) => {
+                            return (
+                              <>
+                                <li
+                                  key={index}
+                                  className="min-h-fit flex flex-col justify-between bg-deepRed rounded-2xl shadow-2xl"
+                                >
+                                  <Image
+                                    src={similar.image}
+                                    width={200}
+                                    height={200}
+                                    quality={10}
+                                    alt={`Similar movie: ${similar.title}`}
+                                    className="rounded-2xl"
+                                    onClick={() => {
+                                      getTitle(similar.id);
+                                      setIsOpen(true);
+                                      getLocations(similar.id);
+                                      goToTop();
+                                    }}
+                                  />
+                                  <p className=" font-poppins font-bold text-offwhite  text-base px-2 py-1 underline text-center">
+                                    {similar.title}
+                                  </p>
+                                </li>
+                              </>
+                            );
+                          })}
+                    </ul>
+
                     {/* Cast Start */}
 
-                    <p className=" text-offwhite font-medium my-2 text-lg">
-                      Cast
-                    </p>
-                    <ul className="grid grid-cols-4 gap-2 h-1/3 md:overflow-y-auto">
+                    {/* <p className=" text-offwhite font-medium my-2 text-lg">
+                      Lead Actors
+                    </p> */}
+                    {/* <ul className="grid grid-cols-4 gap-2 h-1/3 md:overflow-y-auto">
                       {!selectTitle.actorList || selectTitle.actorList === []
                         ? "No Cast Found"
                         : selectTitle.actorList.map((cast, index) => {
@@ -143,7 +186,7 @@ export default function SelectTitle({
                               </>
                             );
                           })}
-                    </ul>
+                    </ul> */}
                   </div>
 
                   {/* End of grid below */}
