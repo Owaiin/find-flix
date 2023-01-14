@@ -100,10 +100,10 @@ export default function Movies() {
     <>
       <main className=" bg-darkgrey py-5 h-auto min-h-screen">
         <div className="w-full px-2 mx-auto">
-          <h1 className=" font-poppins text-5xl font-light mb-5 text-offwhite">
-            FINDFLIX
+          <h1 className=" font-poppins text-5xl font-light mb-3 text-offwhite tracking-widest text-center">
+            FIND-FLIX
           </h1>
-          <p className="mb-3 text-offwhite font-poppins ">
+          <p className="mb-3 text-offwhite font-poppins text-center ">
             Find where to watch TV shows or Movies across all streaming
             platforms
           </p>

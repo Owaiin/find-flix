@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { Dialog } from "@headlessui/react";
 import { TfiBackLeft } from "react-icons/tfi";
+import { useRef } from "react";
 
 export default function SelectTitle({
   isOpen,
@@ -14,8 +15,8 @@ export default function SelectTitle({
 }) {
   const goToTop = () => {
     window.scrollTo({
-      top: 0,
-      behavior: "smooth",
+      top: document.getElementById("title"),
+      behaviour: "smooth",
     });
   };
   return (
@@ -41,6 +42,7 @@ export default function SelectTitle({
           <Dialog.Panel className="w-full max-w-5xl rounded-3xl bg-black  h-full relative">
             <button
               onClick={() => closeModal()}
+              id="backButton"
               className=" rounded-full bg-deepRed text-white text-2xl p-1 absolute top-4 right-4 z-30"
             >
               <TfiBackLeft />
@@ -58,22 +60,28 @@ export default function SelectTitle({
               <div className=" bg-gradient-to-t from-darkgrey w-full h-full absolute top-0 left-0 rounded-3xl z-10"></div>
 
               <Dialog.Description className="relative w-full h-full z-20">
-                <div className="grid md:grid-cols-2 gap-5 absolute top-1/2 px-2">
-                  <div className="">
-                    <Dialog.Title className="md:text-5xl font-poppins text-3xl font-bold text-offwhite relative mb-1 z-20">
+                <div
+                  id="info-wrapper"
+                  className="grid md:grid-cols-2 gap-5 absolute top-1/2"
+                >
+                  <div className=" ">
+                    <Dialog.Title
+                      id="title"
+                      className="md:text-5xl px-2 font-poppins text-3xl font-bold text-offwhite relative mb-1 z-20"
+                    >
                       {selectTitle.title}
                     </Dialog.Title>
-                    <p className=" text-offwhite font-semibold mb-1 font-poppins">
+                    <p className="px-2 text-offwhite font-semibold mb-1 font-poppins">
                       {selectTitle.year}{" "}
                       {!selectTitle.tvSeriesInfo ||
                       selectTitle.tvSeriesInfo.yearEnd === ""
                         ? ""
                         : `- ${selectTitle.tvSeriesInfo.yearEnd}`}
                     </p>
-                    <p className=" text-lg font-poppins text-offwhite font-medium">
+                    <p className=" px-2 text-lg font-poppins text-offwhite font-medium">
                       Watch locations
                     </p>
-                    <ul className="w-full grid grid-cols-4 gap-5 items-end">
+                    <ul className="w-full grid grid-cols-4 px-2 gap-5 items-end mb-3">
                       {locations ? (
                         locations.map((location, index) => {
                           return (
@@ -105,88 +113,49 @@ export default function SelectTitle({
                       )}
                     </ul>
                     {/* WATCH LOCATIONS END */}
-                  </div>
-                  <div>
-                    <p className="text-offwhite font-medium">
-                      {!selectTitle.directors
-                        ? ""
-                        : `Directed by: ${selectTitle.directors}`}
-                    </p>
-                    <p className="text-offwhite">{selectTitle.plot}</p>
-                    {/* DEBUG BUTTON */}
-                    {/* <button
-                      onClick={() => {
-                        console.log(selectTitle), console.log(locations);
-                      }}
-                    >
-                      Log selectTitle
-                    </button> */}
-
-                    {/* SIMILAR TITLES */}
-                    <ul className="grid grid-cols-2 gap-5">
-                      {!selectTitle.similars
-                        ? ""
-                        : selectTitle.similars.map((similar, index) => {
-                            return (
-                              <>
-                                <li
-                                  key={index}
-                                  className="min-h-fit flex flex-col justify-between bg-deepRed rounded-2xl shadow-2xl"
-                                >
-                                  <Image
-                                    src={similar.image}
-                                    width={200}
-                                    height={200}
-                                    quality={10}
-                                    alt={`Similar movie: ${similar.title}`}
-                                    className="rounded-2xl"
-                                    onClick={() => {
-                                      getTitle(similar.id);
-                                      setIsOpen(true);
-                                      getLocations(similar.id);
-                                      goToTop();
-                                    }}
-                                  />
-                                  <p className=" font-poppins font-bold text-offwhite  text-base px-2 py-1 underline text-center">
-                                    {similar.title}
-                                  </p>
-                                </li>
-                              </>
-                            );
-                          })}
-                    </ul>
-
-                    {/* Cast Start */}
-
-                    {/* <p className=" text-offwhite font-medium my-2 text-lg">
-                      Lead Actors
-                    </p> */}
-                    {/* <ul className="grid grid-cols-4 gap-2 h-1/3 md:overflow-y-auto">
-                      {!selectTitle.actorList || selectTitle.actorList === []
-                        ? "No Cast Found"
-                        : selectTitle.actorList.map((cast, index) => {
-                            return (
-                              <>
-                                <li key={index}>
-                                  <Image
-                                    width={100}
-                                    height={100}
-                                    src={cast.image}
-                                    quality={5}
-                                    alt={`Headshot of ${cast.name} who plays ${cast.asCharacter}`}
-                                    className="object-cover h-28 rounded-md"
-                                  />
-                                  <p className="text-sm text-white">
-                                    {cast.name}
-                                  </p>
-                                  <p className="text-xs text-white">
-                                    {cast.asCharacter}
-                                  </p>
-                                </li>
-                              </>
-                            );
-                          })}
-                    </ul> */}
+                    <div className=" bg-gradient-to-t from-darkgrey via-darkgrey">
+                      <div className="px-2">
+                        <p className="text-offwhite font-medium">
+                          {!selectTitle.directors
+                            ? ""
+                            : `Directed by: ${selectTitle.directors}`}
+                        </p>
+                        <p className="text-offwhite mb-5">{selectTitle.plot}</p>
+                      </div>
+                      {/* SIMILAR TITLES */}
+                      <ul className="grid grid-cols-2 gap-5 px-2 py-3 bg-gradient-to-t from-darkgrey via-darkgrey ">
+                        {!selectTitle.similars
+                          ? ""
+                          : selectTitle.similars.map((similar, index) => {
+                              return (
+                                <>
+                                  <li
+                                    key={index}
+                                    className="min-h-fit flex flex-col justify-between bg-deepRed rounded-2xl shadow-2xl"
+                                  >
+                                    <Image
+                                      src={similar.image}
+                                      width={200}
+                                      height={200}
+                                      quality={10}
+                                      alt={`Similar movie: ${similar.title}`}
+                                      className="rounded-2xl h-full"
+                                      onClick={() => {
+                                        getTitle(similar.id);
+                                        setIsOpen(true);
+                                        getLocations(similar.id);
+                                        goToTop();
+                                      }}
+                                    />
+                                    <p className=" font-poppins font-bold text-offwhite text-base px-2 py-1 underline text-center">
+                                      {similar.title}
+                                    </p>
+                                  </li>
+                                </>
+                              );
+                            })}
+                      </ul>
+                    </div>
                   </div>
 
                   {/* End of grid below */}
