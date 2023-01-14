@@ -53,7 +53,7 @@ export default function SelectTitle({
                 src={selectTitle.image}
                 width={300}
                 height={300}
-                quality={75}
+                quality={50}
                 className=" w-full h-full absolute rounded-3xl top-0 left-0 object-top object-cover"
                 alt={`Poster for ${selectTitle.title}`}
               />
@@ -62,7 +62,7 @@ export default function SelectTitle({
               <Dialog.Description className="relative w-full h-full z-20">
                 <div
                   id="info-wrapper"
-                  className="grid md:grid-cols-2 gap-5 absolute top-1/2"
+                  className="grid md:grid-cols-2 gap-5 absolute top-1/2 rounded-tl-2xl rounded-tr-2xl"
                 >
                   <div className=" ">
                     <Dialog.Title
@@ -139,7 +139,7 @@ export default function SelectTitle({
                                       height={200}
                                       quality={10}
                                       alt={`Similar movie: ${similar.title}`}
-                                      className="rounded-2xl h-full"
+                                      className="rounded-2xl h-full object-cover"
                                       onClick={() => {
                                         getTitle(similar.id);
                                         setIsOpen(true);
