@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import SearchResults from "../components/SearchResults";
 import SelectedTitle from "../components/SelectedTitle";
 import { TfiSearch } from "react-icons/tfi";
+import loadingSpinner from "../public/Eclipse-1s-200px.svg";
 import {
   SiGooglecast,
   SiGoogleplay,
@@ -32,16 +33,17 @@ export default function Movies() {
   const [selectTitle, setSelectTitle] = useState({});
   const [locations, setLocations] = useState([]);
   const [relatedTitles, setRelatedTitles] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const checkRelatedTitles = () => {
-    let checkedResults = [];
-    for (i = 0; i < selectTitle.similars.length; i++) {
-      if (selectTitle.similars[i].title) {
-        checkedResults.push(selectTitle.similars[i]);
-      }
-    }
-    setRelatedTitles(checkedResults);
-  };
+  // const checkRelatedTitles = () => {
+  //   let checkedResults = [];
+  //   for (i = 0; i < selectTitle.similars.length; i++) {
+  //     if (selectTitle.similars[i].title) {
+  //       checkedResults.push(selectTitle.similars[i]);
+  //     }
+  //   }
+  //   setRelatedTitles(checkedResults);
+  // };
 
   // framerMotion Variables
 
@@ -91,6 +93,7 @@ export default function Movies() {
 
   // IMDb API Search Query
   const searchTitles = async () => {
+    setIsLoading(true);
     setData([]);
     const response = await fetch(
       `https://imdb-api.com/en/API/SearchTitle/${imdbApiKey}/${searchQuery}`
@@ -107,6 +110,7 @@ export default function Movies() {
     }
     // setLocations(resultsLocations);
     setData(resultsImages);
+    setIsLoading(false);
   };
 
   // IMDb API SEARCH BY ID
@@ -133,7 +137,7 @@ export default function Movies() {
                 platforms
               </p>
               <form
-                className="mb-5 flex items-center"
+                className="mb-5 h-12 flex items-center"
                 onSubmit={(e) => {
                   e.preventDefault();
                   searchTitles();
@@ -142,13 +146,25 @@ export default function Movies() {
               >
                 <input
                   placeholder="Start typing..."
-                  className="border p-2 pl-4 rounded-tl-full text-darkgrey rounded-bl-full w-5/6"
+                  className="border p-2 pl-4 h-full rounded-tl-full text-darkgrey rounded-bl-full w-5/6"
                   type="text"
                   id="search"
                   onChange={(e) => handleInput(e)}
                 />
-                <button className=" w-1/6 bg-deepRed py-3 px-5  text-white text-xl rounded-tr-full rounded-br-full flex">
-                  <TfiSearch className="" />
+                <button className=" w-1/6 bg-deepRed h-full text-white text-xl rounded-tr-full rounded-br-full flex flex-col items-center justify-center">
+                  {isLoading ? (
+                    <Image
+                      id="loading-spinner"
+                      src={loadingSpinner}
+                      width={100}
+                      height={100}
+                      quality={100}
+                      className=" h-3/4 w-full"
+                      alt="animation for loading results"
+                    />
+                  ) : (
+                    <TfiSearch id="search-icon" className="" />
+                  )}
                 </button>
               </form>
             </div>
@@ -157,8 +173,6 @@ export default function Movies() {
               data={data}
               setIsOpen={setIsOpen}
               getLocations={getLocations}
-              relatedTitles={relatedTitles}
-              checkRelatedTitles={checkRelatedTitles}
             />
           </div>
           <SelectedTitle
@@ -170,14 +184,13 @@ export default function Movies() {
             getTitle={getTitle}
             setIsOpen={setIsOpen}
             getLocations={getLocations}
-            relatedTitles={relatedTitles}
           />
         </Container>
 
         <Container>
           <div className="grid xl:grid-cols-3 w-full gap-10 xl:gap-24 my-10 xl:mt-20 text-center">
-            <div className=" w-full h-full">
-              <h2 className="font-poppins text-xl uppercase tracking-wide">
+            <div className=" w-full h-full flex flex-col items-center justify-end">
+              <h2 className="font-poppins text-xl uppercase tracking-wide mb-3">
                 Step 1: Search for your TV Show or Movie
               </h2>
               <p>
@@ -186,7 +199,7 @@ export default function Movies() {
               </p>
             </div>
             <div className=" w-full h-full">
-              <div className="grid grid-cols-6 h-40 items-center pb-2 px-2">
+              <div className="grid grid-cols-6 h-40 items-center pb-2 px-2 end">
                 <SiAmazonprime className="w-full h-full col-span-3" />
                 <Image
                   src={disneyLogo}
@@ -199,7 +212,7 @@ export default function Movies() {
                 <SiGoogleplay className="w-full h-10 col-span-2" />
                 <SiNetflix className="w-full h-10 col-span-2" />
               </div>
-              <h2 className="font-poppins text-xl uppercase tracking-wide mb-2">
+              <h2 className="font-poppins text-xl uppercase tracking-wide mb-3">
                 Step 2: Select a streaming platform to watch on
               </h2>
               <p>
@@ -207,8 +220,8 @@ export default function Movies() {
                 one, you can click the icon to be taken directly to it!
               </p>
             </div>
-            <div className=" w-full h-full flex flex-col items-center">
-              <SiGooglecast className="text-7xl ml-2" />
+            <div className=" w-full h-full flex flex-col items-center justify-end">
+              <SiGooglecast className="text-7xl ml-2 mb-3" />
               <h2 className="font-poppins text-xl uppercase tracking-wide mb-2">
                 Step 3: Cast from your phone to your device!
               </h2>

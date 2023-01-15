@@ -53,7 +53,6 @@ export default function SearchResults({
                     getTitle(object.id);
                     setIsOpen(true);
                     getLocations(object.id);
-                    checkRelatedTitles();
                   }}
                 >
                   <Image
