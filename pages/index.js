@@ -142,7 +142,7 @@ export default function Movies() {
               >
                 <input
                   placeholder="Start typing..."
-                  className="border p-2 pl-4 rounded-tl-full rounded-bl-full w-5/6"
+                  className="border p-2 pl-4 rounded-tl-full text-darkgrey rounded-bl-full w-5/6"
                   type="text"
                   id="search"
                   onChange={(e) => handleInput(e)}
