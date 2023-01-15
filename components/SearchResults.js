@@ -6,6 +6,7 @@ export default function SearchResults({
   data,
   setIsOpen,
   getLocations,
+  checkRelatedTitles,
 }) {
   const framerContainer = {
     hidden: { opacity: 1, scale: 0 },
@@ -35,19 +36,25 @@ export default function SearchResults({
             variants={framerContainer}
             initial="hidden"
             animate="visible"
-            className="grid md:grid-cols-4 grid-cols-2 gap-6  w-full"
+            className="grid md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-4 grid-cols-2 gap-6  w-full"
           >
             {data.map((object, index) => {
               return (
                 <motion.div
                   variants={framerItem}
-                  className=" min-h-fit flex flex-col justify-between bg-deepRed rounded-2xl shadow-2xl"
+                  className=" min-h-fit flex flex-col justify-between bg-deepRed rounded-2xl shadow-2xl cursor-pointer"
                   key={index}
                   exit={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   // animate={{ opacity: 1 }}
                   initial="hidden"
                   viewport={{ once: true }}
+                  onClick={() => {
+                    getTitle(object.id);
+                    setIsOpen(true);
+                    getLocations(object.id);
+                    checkRelatedTitles();
+                  }}
                 >
                   <Image
                     loading="eager"
@@ -64,14 +71,7 @@ export default function SearchResults({
                     }}
                   />
                   <div>
-                    <p
-                      className=" font-poppins font-bold text-offwhite  text-base px-2 py-1 underline text-center"
-                      onClick={() => {
-                        getTitle(object.id);
-                        setIsOpen(true);
-                        getLocations(object.id);
-                      }}
-                    >
+                    <p className=" font-poppins font-bold text-offwhite  text-base px-2 py-1 underline text-center">
                       {object.title}
                     </p>
                     {/* <p className="mb-2 ">{object.description}</p> */}

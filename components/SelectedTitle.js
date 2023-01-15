@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { Dialog } from "@headlessui/react";
 import { TfiBackLeft } from "react-icons/tfi";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function SelectTitle({
   isOpen,
@@ -19,6 +19,9 @@ export default function SelectTitle({
       behaviour: "smooth",
     });
   };
+
+
+
   return (
     <>
       <Dialog
@@ -39,7 +42,7 @@ export default function SelectTitle({
           exit={{ y: 0 }}
           className=" fixed inset-0 flex items-center justify-center pt-5 bg-opacity-70 bg-black"
         >
-          <Dialog.Panel className="w-full max-w-5xl rounded-3xl bg-black  h-full relative">
+          <Dialog.Panel className="w-full max-w-5xl rounded-3xl bg-black  h-full xl:h-5/6 relative overflow-hidden">
             <button
               onClick={() => closeModal()}
               id="backButton"
@@ -51,9 +54,9 @@ export default function SelectTitle({
               <Image
                 loading="eager"
                 src={selectTitle.image}
-                width={300}
-                height={300}
-                quality={50}
+                width={1000}
+                height={1000}
+                quality={100}
                 className=" w-full h-full absolute rounded-3xl top-0 left-0 object-top object-cover"
                 alt={`Poster for ${selectTitle.title}`}
               />
@@ -62,26 +65,26 @@ export default function SelectTitle({
               <Dialog.Description className="relative w-full h-full z-20">
                 <div
                   id="info-wrapper"
-                  className="grid md:grid-cols-2 gap-5 absolute top-1/2 rounded-tl-2xl rounded-tr-2xl"
+                  className="grid  gap-5 absolute top-1/2 rounded-tl-2xl rounded-tr-2xl"
                 >
                   <div className=" ">
                     <Dialog.Title
                       id="title"
-                      className="md:text-5xl px-2 font-poppins text-3xl font-bold text-offwhite relative mb-1 z-20"
+                      className="md:text-5xl px-2 lg:px-10 font-poppins text-3xl font-bold text-offwhite relative mb-1 z-20"
                     >
                       {selectTitle.title}
                     </Dialog.Title>
-                    <p className="px-2 text-offwhite font-semibold mb-1 font-poppins">
+                    <p className="px-2 lg:px-10 text-offwhite font-semibold mb-1 font-poppins">
                       {selectTitle.year}{" "}
                       {!selectTitle.tvSeriesInfo ||
                       selectTitle.tvSeriesInfo.yearEnd === ""
                         ? ""
                         : `- ${selectTitle.tvSeriesInfo.yearEnd}`}
                     </p>
-                    <p className=" px-2 text-lg font-poppins text-offwhite font-medium">
+                    <p className=" px-2 lg:px-10 mb-3 text-lg font-poppins text-offwhite font-medium">
                       Watch locations
                     </p>
-                    <ul className="w-full grid grid-cols-4 px-2 gap-5 items-end mb-3">
+                    <ul className="w-full grid grid-cols-4 lg:grid-cols-8 px-2 lg:px-10 gap-5 items-end mb-3">
                       {locations ? (
                         locations.map((location, index) => {
                           return (
@@ -114,7 +117,7 @@ export default function SelectTitle({
                     </ul>
                     {/* WATCH LOCATIONS END */}
                     <div className=" bg-gradient-to-t from-darkgrey via-darkgrey">
-                      <div className="px-2">
+                      <div className="px-2 lg:px-10">
                         <p className="text-offwhite font-medium">
                           {!selectTitle.directors
                             ? ""
@@ -122,24 +125,28 @@ export default function SelectTitle({
                         </p>
                         <p className="text-offwhite mb-5">{selectTitle.plot}</p>
                       </div>
+                      <p className="px-2 xl:px-10 font-poppins text-white mb-3">
+                        Things like this you might enjoy!
+                      </p>
                       {/* SIMILAR TITLES */}
-                      <ul className="grid grid-cols-2 gap-5 px-2 py-3 bg-gradient-to-t from-darkgrey via-darkgrey ">
-                        {!selectTitle.similars
+                      <ul className="grid grid-cols-2 lg:rounded-2xl lg:grid-cols-4 gap-5 px-2 lg:px-10 py-3 bg-gradient-to-t from-darkgrey via-darkgrey ">
+                        {!selectTitle.similars ||
+                        selectTitle.similars.title === null
                           ? ""
                           : selectTitle.similars.map((similar, index) => {
                               return (
                                 <>
                                   <li
                                     key={index}
-                                    className="min-h-fit flex flex-col justify-between bg-deepRed rounded-2xl shadow-2xl"
+                                    className="min-h-fit flex flex-col justify-between bg-deepRed rounded-2xl cursor-pointer shadow-2xl"
                                   >
                                     <Image
                                       src={similar.image}
                                       width={200}
                                       height={200}
-                                      quality={10}
+                                      quality={100}
                                       alt={`Similar movie: ${similar.title}`}
-                                      className="rounded-2xl h-full object-cover"
+                                      className="rounded-2xl h-full w-full object-cover"
                                       onClick={() => {
                                         getTitle(similar.id);
                                         setIsOpen(true);
