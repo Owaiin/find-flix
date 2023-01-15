@@ -42,7 +42,7 @@ export default function SearchResults({
               return (
                 <motion.div
                   variants={framerItem}
-                  className=" min-h-fit flex flex-col justify-between bg-deepRed rounded-2xl shadow-2xl cursor-pointer"
+                  className=" min-h-fit flex flex-col relative justify-between rounded-2xl shadow-2xl cursor-pointer overflow-hidden"
                   key={index}
                   exit={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
@@ -69,22 +69,11 @@ export default function SearchResults({
                       getLocations(object.id);
                     }}
                   />
+                  <div className="absolute z-10 h-full w-full bottom-0 left-0 bg-gradient-to-t from-black"></div>
                   <div>
-                    <p className=" font-poppins font-bold text-offwhite  text-base px-2 py-1 underline text-center">
+                    <p className=" absolute z-20 bottom-0 px-auto w-full pb-2 font-poppins font-bold text-offwhite  text-base px-2 py-1 underline text-center">
                       {object.title}
                     </p>
-                    {/* <p className="mb-2 ">{object.description}</p> */}
-
-                    {/* <button
-                      onClick={() => {
-                        getTitle(object.id);
-                        setIsOpen(true);
-                        getLocations(object.id);
-                      }}
-                      className=" bg-deepRed py-2 px-4 rounded-md mt-2 w-full font-medium text-white"
-                    >
-                      More info
-                    </button> */}
                   </div>
                 </motion.div>
               );
@@ -95,54 +84,3 @@ export default function SearchResults({
     </>
   );
 }
-//   <div>
-//     <AnimatePresence>
-//       <motion.div
-//         variants={framerContainer}
-//         initial="hidden"
-//         animate="visible"
-//         className="grid md:grid-cols-4 grid-cols-1 gap-6  w-full"
-//       >
-//         {props.data.map((object, index) => {
-//           return (
-//             <motion.div
-//               variants={framerItem}
-//               className=" min-h-fit flex flex-col justify-between bg-white p-4 rounded-2xl shadow-2xl"
-//               key={index}
-//               exit={{ opacity: 0 }}
-//               whileInView={{ opacity: 1 }}
-//               // animate={{ opacity: 1 }}
-//               initial="hidden"
-//               viewport={{ once: true }}
-//             >
-//               <Image
-//                 loading="eager"
-//                 src={object.image}
-//                 width={300}
-//                 height={300}
-//                 quality={25}
-//                 className=" rounded-2xl h-3/4 object-cover w-full"
-//                 alt={`Poster for ${object.title}`}
-//               />
-//               <div>
-//                 <p className=" font-bold text-xl">{object.title}</p>
-//                 <p className="mb-2 ">{object.description}</p>
-
-//                 <button
-//                   onClick={() => {
-//                     getTitle(object.id);
-//                     setIsOpen(true);
-//                     getLocations(object.id);
-//                   }}
-//                   className=" bg-slate-500 py-2 px-4 rounded-2xl font-medium text-white"
-//                 >
-//                   More info
-//                 </button>
-//               </div>
-//             </motion.div>
-//           );
-//         })}
-//       </motion.div>
-//     </AnimatePresence>
-//   </div>;
-// }

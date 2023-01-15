@@ -20,8 +20,6 @@ export default function SelectTitle({
     });
   };
 
-
-
   return (
     <>
       <Dialog
@@ -54,13 +52,13 @@ export default function SelectTitle({
               <Image
                 loading="eager"
                 src={selectTitle.image}
-                width={1000}
-                height={1000}
+                width={500}
+                height={500}
                 quality={100}
                 className=" w-full h-full absolute rounded-3xl top-0 left-0 object-top object-cover"
                 alt={`Poster for ${selectTitle.title}`}
               />
-              <div className=" bg-gradient-to-t from-darkgrey w-full h-full absolute top-0 left-0 rounded-3xl z-10"></div>
+              <div className=" bg-gradient-to-t from-black w-full h-full absolute top-0 left-0 rounded-3xl z-10"></div>
 
               <Dialog.Description className="relative w-full h-full z-20">
                 <div
@@ -116,7 +114,7 @@ export default function SelectTitle({
                       )}
                     </ul>
                     {/* WATCH LOCATIONS END */}
-                    <div className=" bg-gradient-to-t from-darkgrey via-darkgrey">
+                    <div className=" bg-gradient-to-t from-black via-black">
                       <div className="px-2 lg:px-10">
                         <p className="text-offwhite font-medium">
                           {!selectTitle.directors
@@ -138,7 +136,7 @@ export default function SelectTitle({
                                 <>
                                   <li
                                     key={index}
-                                    className="min-h-fit flex flex-col justify-between bg-deepRed rounded-2xl cursor-pointer shadow-2xl"
+                                    className="min-h-fit flex flex-col justify-between relative rounded-2xl overflow-hidden cursor-pointer shadow-2xl"
                                   >
                                     <Image
                                       src={similar.image}
@@ -154,7 +152,8 @@ export default function SelectTitle({
                                         goToTop();
                                       }}
                                     />
-                                    <p className=" font-poppins font-bold text-offwhite text-base px-2 py-1 underline text-center">
+                                    <div className="absolute z-10 w-full h-full bg-gradient-to-t from-black"></div>
+                                    <p className=" absolute z-20 bottom-0 px-auto pb-2 font-poppins font-bold text-offwhite text-base px-2 py-1 underline text-center">
                                       {similar.title}
                                     </p>
                                   </li>
