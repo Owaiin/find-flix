@@ -136,6 +136,12 @@ export default function SelectTitle({
                                 <>
                                   <li
                                     key={index}
+                                    onClick={() => {
+                                      getTitle(similar.id);
+                                      setIsOpen(true);
+                                      getLocations(similar.id);
+                                      goToTop();
+                                    }}
                                     className="min-h-fit flex flex-col justify-between relative rounded-2xl overflow-hidden cursor-pointer shadow-2xl"
                                   >
                                     <Image
@@ -145,15 +151,9 @@ export default function SelectTitle({
                                       quality={100}
                                       alt={`Similar movie: ${similar.title}`}
                                       className="rounded-2xl h-full w-full object-cover"
-                                      onClick={() => {
-                                        getTitle(similar.id);
-                                        setIsOpen(true);
-                                        getLocations(similar.id);
-                                        goToTop();
-                                      }}
                                     />
-                                    <div className="absolute z-10 w-full h-full bg-gradient-to-t from-black"></div>
-                                    <p className=" absolute z-20 bottom-0 px-auto pb-2 font-poppins font-bold text-offwhite text-base px-2 py-1 underline text-center">
+                                    <div className="absolute z-10 w-full h-full bg-gradient-to-t from-black opacity-70"></div>
+                                    <p className=" absolute z-20 bottom-0 px-auto w-full pb-2 font-poppins font-bold text-offwhite text-base px-2 py-1 underline text-center">
                                       {similar.title}
                                     </p>
                                   </li>

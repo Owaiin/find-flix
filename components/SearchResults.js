@@ -69,7 +69,7 @@ export default function SearchResults({
                       getLocations(object.id);
                     }}
                   />
-                  <div className="absolute z-10 h-full w-full bottom-0 left-0 bg-gradient-to-t from-black"></div>
+                  <div className="absolute z-10 h-full w-full bottom-0 left-0 bg-gradient-to-t from-black opacity-80"></div>
                   <div>
                     <p className=" absolute z-20 bottom-0 px-auto w-full pb-2 font-poppins font-bold text-offwhite  text-base px-2 py-1 underline text-center">
                       {object.title}
