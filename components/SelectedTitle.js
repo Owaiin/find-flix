@@ -43,6 +43,8 @@ export default function SelectTitle({
         >
           <Dialog.Panel className="w-full max-w-5xl rounded-3xl bg-black  h-full xl:h-5/6 relative overflow-hidden">
             <button
+              aria-label="go back"
+              alt="go back"
               onClick={() => closeModal()}
               id="backButton"
               className=" rounded-full bg-deepRed text-white text-2xl p-1 absolute top-4 right-4 z-30"

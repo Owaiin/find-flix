@@ -156,7 +156,11 @@ export default function Movies() {
                   id="search"
                   onChange={(e) => handleInput(e)}
                 />
-                <button className=" w-1/6 bg-deepRed h-full text-white text-xl rounded-tr-full rounded-br-full flex flex-col items-center justify-center">
+                <button
+                  aria-label="search"
+                  alt="search"
+                  className=" w-1/6 bg-deepRed h-full text-white text-xl rounded-tr-full rounded-br-full flex flex-col items-center justify-center"
+                >
                   {isLoading ? (
                     <Image
                       id="loading-spinner"
