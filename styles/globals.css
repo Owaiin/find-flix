@@ -7,3 +7,7 @@
   font-family: "Poppins";
   src: url(../public/fonts/Poppins-SemiBold.ttf);
 }
+
+html {
+  background-color: "#171616";
+}
