@@ -115,6 +115,21 @@ export default function Movies() {
 
   return (
     <>
+      <Head>
+        <title>
+          Find where TV Shows and Movies across all Streaming Platforms in one
+          place | FindFlix
+        </title>
+        <meta
+          name="description"
+          content="Find all your TV Shows and Movies across all streaming platforms and even filter by country!"
+          key="desc"
+        />
+        <meta
+          property="og:Title"
+          content="Find TV Shows and Movies on all Platforms with FindFlix"
+        />
+      </Head>
       <main className=" bg-darkgrey py-5 h-auto min-h-screen">
         <Container>
           <div className="w-full mx-auto">
