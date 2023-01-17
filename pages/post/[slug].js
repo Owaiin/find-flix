@@ -1,13 +1,18 @@
 // import { useRouter } from "next/router";
 import client from "../../client";
+import { PortableText } from "@portabletext/react";
 
-const Post = ({ post }) => {
+const Post = ({ posts }) => {
   // const router = useRouter();
 
   return (
-    <article>
-      <h1>{post?.slug?.current}</h1>
-    </article>
+    <main>
+      <h1>{posts?.slug?.current}</h1>
+      <h2>{posts ? posts.name : ""}</h2>
+      <PortableText value={posts.article} />
+
+      <article>{/* <PortableText value={[post.article]} /> */}</article>
+    </main>
   );
 };
 
@@ -25,14 +30,14 @@ export async function getStaticPaths() {
 export async function getStaticProps(context) {
   // It's important to default the slug so that it doesn''t return undefined!
   const { slug = "" } = context.params;
-  const post = await client.fetch(
-    `*[_type == "pet" && slug.current == $slug][0]`,
+  const posts = await client.fetch(
+    `*[_type == "blogPost" && slug.current == $slug][0]`,
     { slug }
   );
 
   return {
     props: {
-      post,
+      posts,
     },
   };
 }
