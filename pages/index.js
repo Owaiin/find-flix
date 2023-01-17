@@ -35,16 +35,6 @@ export default function Movies() {
   const [relatedTitles, setRelatedTitles] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
-  // const checkRelatedTitles = () => {
-  //   let checkedResults = [];
-  //   for (i = 0; i < selectTitle.similars.length; i++) {
-  //     if (selectTitle.similars[i].title) {
-  //       checkedResults.push(selectTitle.similars[i]);
-  //     }
-  //   }
-  //   setRelatedTitles(checkedResults);
-  // };
-
   // framerMotion Variables
 
   let i = 0;
@@ -190,6 +180,7 @@ export default function Movies() {
         <Container>
           <div className="grid xl:grid-cols-3 w-full gap-10 xl:gap-24 my-10 xl:mt-20 text-center">
             <div className=" w-full h-full flex flex-col items-center justify-end">
+              <TfiSearch className="h-20 w-full mb-3" />
               <h2 className="font-poppins text-xl uppercase tracking-wide mb-3">
                 Step 1: Search for your TV Show or Movie
               </h2>

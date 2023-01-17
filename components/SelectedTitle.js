@@ -3,6 +3,8 @@ import Image from "next/image";
 import { Dialog } from "@headlessui/react";
 import { TfiBackLeft } from "react-icons/tfi";
 import { useRef, useState } from "react";
+import ResultCard from "./ResultCard";
+import SearchResults from "./SearchResults";
 
 export default function SelectTitle({
   isOpen,
@@ -13,11 +15,10 @@ export default function SelectTitle({
   setIsOpen,
   getLocations,
 }) {
-  const goToTop = () => {
-    window.scrollTo({
-      top: document.getElementById("title"),
-      behaviour: "smooth",
-    });
+  const modalRef = useRef();
+
+  const scrollToTitle = () => {
+    modalRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -60,20 +61,21 @@ export default function SelectTitle({
               />
               <div className=" bg-gradient-to-t from-black w-full h-full absolute top-0 left-0 rounded-3xl z-10"></div>
 
-              <Dialog.Description className="relative w-full h-full z-20">
+              <Dialog.Description
+                as="div"
+                className="relative w-full h-full z-20"
+              >
+                <div ref={modalRef}></div>
                 <div
                   id="info-wrapper"
                   className="grid  gap-5 absolute top-1/2 rounded-tl-2xl rounded-tr-2xl"
                 >
                   <div className=" ">
-                    <Dialog.Title
-                      id="title"
-                      className="md:text-5xl px-2 lg:px-10 font-poppins text-3xl font-bold text-offwhite relative mb-1 z-20"
-                    >
+                    <Dialog.Title className="md:text-5xl px-2 lg:px-10 font-poppins text-3xl font-bold text-offwhite relative mb-1 z-20">
                       {selectTitle.title}
                     </Dialog.Title>
                     <p className="px-2 lg:px-10 text-offwhite font-semibold mb-1 font-poppins">
-                      {selectTitle.year}{" "}
+                      {selectTitle.year}
                       {!selectTitle.tvSeriesInfo ||
                       selectTitle.tvSeriesInfo.yearEnd === ""
                         ? ""
@@ -83,16 +85,13 @@ export default function SelectTitle({
                       Watch locations
                     </p>
                     <ul className="w-full grid grid-cols-4 lg:grid-cols-8 px-2 lg:px-10 gap-5 items-end mb-3">
+                      {/* Watch Locations */}
                       {locations ? (
                         locations.map((location, index) => {
                           return (
                             <>
-                              <li key={index}>
-                                <a
-                                  key={index}
-                                  target="_blank"
-                                  href={location.url}
-                                >
+                              <li key={location}>
+                                <a target="_blank" href={location.url}>
                                   <Image
                                     className=" filter brightness-100 contrast-200 invert"
                                     height={50}
@@ -136,26 +135,17 @@ export default function SelectTitle({
                                 <>
                                   <li
                                     key={index}
-                                    onClick={() => {
-                                      getTitle(similar.id);
-                                      setIsOpen(true);
-                                      getLocations(similar.id);
-                                      goToTop();
-                                    }}
-                                    className="min-h-fit flex flex-col justify-between relative rounded-2xl overflow-hidden cursor-pointer shadow-2xl"
+                                    onClick={() => scrollToTitle()}
                                   >
-                                    <Image
-                                      src={similar.image}
-                                      width={200}
-                                      height={200}
-                                      quality={100}
-                                      alt={`Similar movie: ${similar.title}`}
-                                      className="rounded-2xl h-full w-full object-cover"
+                                    <ResultCard
+                                      id={similar.id}
+                                      image={similar.image}
+                                      title={similar.title}
+                                      // key={index}
+                                      getLocations={getLocations}
+                                      setIsOpen={setIsOpen}
+                                      getTitle={getTitle}
                                     />
-                                    <div className="absolute z-10 w-full h-full bg-gradient-to-t from-black opacity-70"></div>
-                                    <p className=" absolute z-20 bottom-0 px-auto w-full pb-2 font-poppins font-bold text-offwhite text-base px-2 py-1 underline text-center">
-                                      {similar.title}
-                                    </p>
                                   </li>
                                 </>
                               );

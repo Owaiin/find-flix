@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
+import ResultCard from "./ResultCard";
 
 export default function SearchResults({
   getTitle,
@@ -40,42 +41,15 @@ export default function SearchResults({
           >
             {data.map((object, index) => {
               return (
-                <motion.div
-                  variants={framerItem}
-                  className=" min-h-fit flex flex-col relative justify-between rounded-2xl shadow-2xl cursor-pointer overflow-hidden"
+                <ResultCard
+                  id={object.id}
+                  image={object.image}
+                  title={object.title}
                   key={index}
-                  exit={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  // animate={{ opacity: 1 }}
-                  initial="hidden"
-                  viewport={{ once: true }}
-                  onClick={() => {
-                    getTitle(object.id);
-                    setIsOpen(true);
-                    getLocations(object.id);
-                  }}
-                >
-                  <Image
-                    loading="eager"
-                    src={object.image}
-                    width={300}
-                    height={300}
-                    quality={25}
-                    className=" rounded-2xl h-full object-cover w-full"
-                    alt={`Poster for ${object.title}`}
-                    onClick={() => {
-                      getTitle(object.id);
-                      setIsOpen(true);
-                      getLocations(object.id);
-                    }}
-                  />
-                  <div className="absolute z-10 h-full w-full bottom-0 left-0 bg-gradient-to-t from-black opacity-80"></div>
-                  <div>
-                    <p className=" absolute z-20 bottom-0 px-auto w-full pb-2 font-poppins font-bold text-offwhite  text-base px-2 py-1 underline text-center">
-                      {object.title}
-                    </p>
-                  </div>
-                </motion.div>
+                  getLocations={getLocations}
+                  setIsOpen={setIsOpen}
+                  getTitle={getTitle}
+                />
               );
             })}
           </motion.div>
