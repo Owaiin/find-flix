@@ -133,8 +133,11 @@ export default function Movies() {
           content="Find TV Shows and Movies on all Platforms with FindFlix"
         />
       </Head>
-      <Script src="https://www.googletagmanager.com/gtag/js?id=G-34JY2P0FFR" />
-      <Script id="google-analytics">
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-34JY2P0FFR"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
