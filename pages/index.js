@@ -20,6 +20,7 @@ import dynamic from "next/dynamic";
 import Container from "../components/Container";
 import Footer from "../components/Footer";
 import disneyLogo from "../public/disneyPlusLogo.svg";
+import Script from "next/script";
 
 const selectedTitleDy = dynamic(() => import("../components/SelectedTitle"));
 const searchResultsDy = dynamic(() => import("../components/SearchResults"));
@@ -116,15 +117,20 @@ export default function Movies() {
   return (
     <>
       <Head>
-      <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-34JY2P0FFR"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+        {/* Google Tag Manager */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-34JY2P0FFR"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
 
-  gtag('config', 'G-34JY2P0FFR');
-</script>
+          gtag('config', 'G-34JY2P0FFR');
+        `}
+        </Script>
         <title>
           Find where TV Shows and Movies across all Streaming Platforms in one
           place | FindFlix
