@@ -51,7 +51,7 @@ export default function Movies() {
     }
   };
 
-  console.log("This is the search query: ", searchQuery);
+  // console.log("This is the search query: ", searchQuery);
   // UTelly API - Resquest Options - API Key and Host location
   const options = {
     method: "GET",
@@ -90,7 +90,7 @@ export default function Movies() {
       `https://imdb-api.com/en/API/SearchTitle/${imdbApiKey}/${searchQuery}`
     );
     const titles = await response.json();
-    console.log("Titles function data:", titles.results);
+    // console.log("Titles function data:", titles.results);
     let resultsImages = [];
     // let resultsLocations = [];
     // Only responses with an image added to results
@@ -110,7 +110,7 @@ export default function Movies() {
       `https://imdb-api.com/en/API/Title/${imdbApiKey}/${id}`
     );
     const title = await response.json();
-    console.log(title);
+    // console.log(title);
     setSelectTitle(title);
   };
 
