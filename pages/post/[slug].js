@@ -9,7 +9,7 @@ const Post = ({ posts }) => {
     <main>
       <h1>{posts?.slug?.current}</h1>
       <h2>{posts ? posts.name : ""}</h2>
-      <PortableText value={posts.article} />
+      {/* <PortableText value={posts.article} /> */}
 
       <article>{/* <PortableText value={[post.article]} /> */}</article>
     </main>

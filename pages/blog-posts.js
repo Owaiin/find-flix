@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import { Navbar } from "../components/Navbar";
 import Container from "../components/Container";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function IndexPage({ posts }) {
   return (
@@ -15,17 +16,17 @@ export default function IndexPage({ posts }) {
       </Head>
       <Navbar />
       <Container>
-        <header className="bg-darkgrey">
-          <h1 className=" text-3xl font-poppins uppercase tracking-widest">
+        <header className="bg-darkgrey pt-5">
+          <h1 className="text-3xl font-poppins uppercase tracking-widest">
             Articles
           </h1>
         </header>
-        <main className="bg-darkgrey">
-          <h2 className="text-2xl font-poppins uppercase tracking-wide">
+        <main className="bg-darkgrey pt-5">
+          <h2 className="text-2xl font-poppins uppercase tracking-wide mb-3">
             Blog Posts
           </h2>
           {posts.length > 0 && (
-            <ul>
+            <ul className="grid grid-cols-1 gap-5">
               {posts.map((post) => (
                 <li key={post.id}>
                   <Image
@@ -33,7 +34,7 @@ export default function IndexPage({ posts }) {
                     width={300}
                     height={300}
                     alt={post.metadata}
-                    className="object-cover w-full h-20"
+                    className="object-cover w-full"
                   />
                   <h3 className="text-xl font-poppins ">{post.name}</h3>
                   <p>{post.metadata}</p>
