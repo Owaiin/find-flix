@@ -118,19 +118,7 @@ export default function Movies() {
     <>
       <Head>
         {/* Google Tag Manager */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-34JY2P0FFR"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments);}
-          gtag('js', new Date());
 
-          gtag('config', 'G-34JY2P0FFR');
-        `}
-        </Script>
         <title>
           Find where TV Shows and Movies across all Streaming Platforms in one
           place | FindFlix
@@ -145,6 +133,16 @@ export default function Movies() {
           content="Find TV Shows and Movies on all Platforms with FindFlix"
         />
       </Head>
+      <Script src="https://www.googletagmanager.com/gtag/js?id=G-34JY2P0FFR" />
+      <Script id="google-analytics">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'G-34JY2P0FFR');
+        `}
+      </Script>
       <main className=" bg-darkgrey py-5 h-auto min-h-screen">
         <Container>
           <div className="w-full mx-auto">
