@@ -116,6 +116,15 @@ export default function Movies() {
   return (
     <>
       <Head>
+      <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-34JY2P0FFR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-34JY2P0FFR');
+</script>
         <title>
           Find where TV Shows and Movies across all Streaming Platforms in one
           place | FindFlix
