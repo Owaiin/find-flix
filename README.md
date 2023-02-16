@@ -7,6 +7,7 @@ The goal of this is to help find where to watch TV Shows and Movies across all m
 
 ## How
 Using a combination of the IMDB API and the UTelly API to provide a cohesive user experience that helps people find what they're looking for, and where to watch it.
+The IMDB API is the main search component. This helps find all of the content and is the key part of the tool. The UTelly API uses the IMDB response UID to search its database for the streaming locations and the urls to the content on each platform.
 ### Design
 The design was built to follow the ideas of Netflix to help integrate users into how to use the UI.
 Frame-Motion was used to do the smooth animation transitions for the card pop-up and the scroll-to-top when clicking on related items.
