@@ -1,36 +1,21 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# FindFlix - [Live Site Here](https://find-flix.netlify.app)
 
-## Getting Started
+When trying to find where we Stream the Harry Potter films over Christmas, and having to switch between different apps on the TV, it was time to make this easier. So I spent the next few days putting this together! It's fully responsive and follows a design style similar to Netflix for familiarity. When used on Mobile, the links to the streaming services will direct you to the app (if you have it downloaded) and you can then instantly cast to your device. 
 
-First, run the development server:
+## Main Goal
+The goal of this is to help find where to watch TV Shows and Movies across all major streaming services within the UK.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## How
+Using a combination of the IMDB API and the UTelly API to provide a cohesive user experience that helps people find what they're looking for, and where to watch it.
+### Design
+The design was built to follow the ideas of Netflix to help integrate users into how to use the UI.
+Frame-Motion was used to do the smooth animation transitions for the card pop-up and the scroll-to-top when clicking on related items.
+### Hosting
+Netlify
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Learning Outcomes:
+ - Create more components
+    - Whilst this was a small project, on a larger project using such few components would become difficult to keep cohesive. Things such as Buttons, Containers, Cards should be put into a single Component file with variations exported.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+ - Use Context (Prop drilling can be messy)
+    - When passing data to and from the SearchResults and the SelectedTitle, it doesn't read all that well in the code and can be a bit confusing to go over. Putting this into Context would have been better (especially for larger scale projects), so that the information state can be accessed easier and more elequently.
